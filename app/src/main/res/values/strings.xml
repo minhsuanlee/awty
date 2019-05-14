@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">AWTY</string>
+    <string name="enter_your_message">Enter your message</string>
+    <string name="xxx_xxx_xxxx">Phone #: xxxxxxxxxx</string>
+    <string name="how_many_minutes_in_between">How many minutes in between?</string>
+    <string name="start">Start</string>
+    <string name="are_we_there_yet">ARE WE THERE YET!?</string>
+    <string name="clear">Clear</string>
+</resources>
