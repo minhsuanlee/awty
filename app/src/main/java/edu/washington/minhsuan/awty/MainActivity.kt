@@ -1,30 +1,27 @@
 package edu.washington.minhsuan.awty
 
 import android.content.Intent
-import android.os.AsyncTask
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.telephony.PhoneNumberFormattingTextWatcher
-import android.telephony.PhoneNumberUtils
-import android.text.Editable
-import android.text.TextWatcher
 import android.util.Log
-import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main.*
-import java.util.*
-import android.text.InputFilter
-
+import android.Manifest.permission.SEND_SMS
+import android.support.v4.app.ActivityCompat
+import android.content.pm.PackageManager
 
 
 class MainActivity : AppCompatActivity() {
     private val TAG = "Main"
+    private val MY_PERMISSIONS_REQUEST_SEND_SMS = 1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        checkForSmsPermission()
 
         val editMsg = findViewById<EditText>(R.id.etxtMsg)
         val editPhone = findViewById<EditText>(R.id.etxtPhone)
@@ -82,5 +79,12 @@ class MainActivity : AppCompatActivity() {
 
     private fun formatPhoneNumber(phone: String): String {
         return "(${phone.substring(0..2)}) ${phone.substring(3..5)}-${phone.substring(6)}"
+    }
+
+    private fun checkForSmsPermission() {
+        if (ActivityCompat.checkSelfPermission(this, SEND_SMS) != PackageManager.PERMISSION_GRANTED) {
+            Log.v(TAG, getString(R.string.permission_not_granted))
+            ActivityCompat.requestPermissions(this, arrayOf(SEND_SMS), MY_PERMISSIONS_REQUEST_SEND_SMS)
+        }
     }
 }

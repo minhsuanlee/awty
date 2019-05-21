@@ -2,11 +2,10 @@ package edu.washington.minhsuan.awty
 
 import android.app.IntentService
 import android.content.Intent
-import android.content.Context
 import android.os.Handler
+import android.telephony.SmsManager
 import android.util.Log
 import android.widget.Toast
-import java.nio.channels.InterruptedByTimeoutException
 
 
 class MessageService : IntentService("MessageService") {
@@ -38,9 +37,20 @@ class MessageService : IntentService("MessageService") {
 
         while (nagging) {
             mHandler.post {
-                Toast.makeText(this@MessageService, "$phone:$msg", Toast.LENGTH_LONG).show()
-                Log.v(TAG, "Toasting...")
+                try {
+                    Toast.makeText(this@MessageService, "Sending SMS Message...", Toast.LENGTH_SHORT).show()
+                    val smgr = SmsManager.getDefault() as SmsManager
+                    smgr.sendTextMessage(phone, null, msg, null, null)
+                    Toast.makeText(this@MessageService, "SMS Sent Successfully.\n$phone:$msg",
+                        Toast.LENGTH_SHORT).show()
+                } catch (e: Exception){
+                    Log.v(TAG, "failed")
+                    Log.e(TAG, "exception", e)
+                    Toast.makeText(this@MessageService, "SMS Failed to Send, Please try again",
+                        Toast.LENGTH_SHORT).show()
+                }
             }
+
             try {
                 Thread.sleep((minute * 60  * 1000).toLong())
             } catch (e: InterruptedException) {

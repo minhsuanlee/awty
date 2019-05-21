@@ -6,4 +6,5 @@
     <string name="start">Start</string>
     <string name="are_we_there_yet">ARE WE THERE YET!?</string>
     <string name="clear">Clear</string>
+    <string name="permission_not_granted">PERMISSION NOT GRANTED!</string>
 </resources>
